@@ -1,36 +1,20 @@
-variable "fullcompanyname" {
-  default = "Arkansas Blue Cross Blue Shield"
+variable "mg-names" {
+  description = "List of management group names to be created "
+  type    = map
+  default = {for x in ["TEST1", "TEST2", "TEST3"] : x => x
+  }
 }
-variable "shortcompanyname" {
-  default = "ABCBS"
+
+variable "mg-child-names" {
+  description = "List of management group names to be created "
+  type    = map
+  default = {for x in ["child1", "child2", "child4"] : x => x
+  }
 }
-variable "CompanyManagementGroupName" {
-  default = "Tenant Root Group"
+
+variable "parent-mg" {
+    description = "Name of the parent management group"
+    type    = string
+    default = "parent-mg"
+  
 }
-variable "Sandbox" {
-    default = "Sandbox"
- }
- variable "platform" {
-     default = "platform"
- } 
- variable "production" {
-     default = "production"
- } 
- variable "staging" {
-     default = "staging"
- } 
-  variable "development" {
-     default = "development"
- }
-  variable "production-hr" {
-     default = "prod-hr"
- }
-   variable "production-marketing" {
-     default = "prod-marketing"
- }
-   variable "IT" {
-     default = "IT"
- }
-    variable "shared" {
-     default = "shared"
- }
