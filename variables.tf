@@ -1,20 +1,19 @@
-variable "mg-names" {
-  description = "List of management group names to be created "
-  type    = map
-  default = {for x in ["TEST1", "TEST2", "TEST3"] : x => x
-  }
+variable "tier-1-mgs" {
+  description = "List of Tier 1 Management group names"
+  type        = list(any)
+  default     = ["mg-abcbs", "mg-sandbox"]
+
 }
 
-variable "mg-child-names" {
-  description = "List of management group names to be created "
-  type    = map
-  default = {for x in ["child1", "child2", "child4"] : x => x
-  }
+variable "tier-2-mgs" {
+  description = "List of Tier 2 Management group names "
+  type        = list(any)
+  default     = ["mg-platform", "mg-production", "mg-staging", "mg-development"]
 }
 
-variable "parent-mg" {
-    description = "Name of the parent management group"
-    type    = string
-    default = "parent-mg"
-  
+variable "tier-3-mgs" {
+  description = "List of Tier 3 Management group names"
+  type        = list(any)
+  default     = ["mg-prod-hr", "mg-prod-marketing", "mg-IT", "mg-shared"]
 }
+

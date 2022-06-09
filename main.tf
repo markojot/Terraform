@@ -1,21 +1,25 @@
-provider "azurerm" {
-  features {}
+resource "azurerm_management_group" "tier-1" {
+  count        = length(var.tier-1-mgs)
+  display_name = var.tier-1-mgs[count.index]
 }
 
-resource "azurerm_management_group" "main-mgs" {
-    for_each     = var.mg-names
-    display_name = each.value
+
+resource "azurerm_management_group" "tier-2" {
+  count                      = length(var.tier-2-mgs)
+  display_name               = var.tier-2-mgs[count.index]
+  parent_management_group_id = azurerm_management_group.tier-1[0].id
+  depends_on = [
+    azurerm_management_group.tier-1
+  ]
 }
 
-resource "azurerm_management_group" "parent-mg" {
-    display_name = "${var.parent-mg}"
+
+resource "azurerm_management_group" "tier-3" {
+  count                      = length(var.tier-3-mgs)
+  display_name               = var.tier-3-mgs[count.index]
+  parent_management_group_id = azurerm_management_group.tier-2[1].id
+  depends_on = [
+    azurerm_management_group.tier-2
+  ]
 }
 
-resource "azurerm_management_group" "child-mgs" {
-    for_each   = var.mg-child-names
-    display_name = each.value
-    parent_management_group_id = azurerm_management_group.parent-mg.id
-    depends_on = [
-      azurerm_management_group.parent-mg
-    ]
-}
